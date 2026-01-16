@@ -1,6 +1,6 @@
 from app.server import mcp
 # from app.config import NWS_API_BASE
-from app.http_client import make_nws_request
+from app.http_client import make_nws_request, make_api_call
 from app.formatters import format_alert
 
 # @mcp.tool()
@@ -41,3 +41,20 @@ async def get_weather_summary(location: str) -> str:
         f"Wind: {current['wind_kph']} km/h\n"
         f"Humidity: {current['humidity']}%"
     )
+
+@mcp.tool()
+async def get_wallet_balance(sv_id: str, wallet_name: str) -> str:
+    """
+       Get wallet balance information for a given wallet and account.
+    """
+    url = f"http://localhost:6000/wallets/{sv_id}/{wallet_name}/balance-enquiry"
+    data = await make_api_call(url)
+
+    if not data:
+        return "Failed to fetch Wallet balance."
+
+    wallet_amount = data.get("availableBalance")
+    if wallet_amount is None:
+        return "No wallet amount found."
+
+    return f"Available balance: {wallet_amount}"

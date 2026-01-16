@@ -58,3 +58,27 @@ async def make_nws_request(
             logger.exception("Unexpected WeatherAPI error")
 
     return None
+
+async def make_api_call(url: str) -> Optional[dict[str, Any]]:
+    headers = {
+        "Accept": "application/json",
+    }
+
+    async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT) as client:
+        try:
+            response = await client.get(url, headers=headers)
+            response.raise_for_status()
+            return response.json()
+
+        except httpx.TimeoutException:
+            logger.error(f"Timeout while calling NWS API: {url}")
+
+        except httpx.HTTPStatusError as exc:
+            logger.error(
+                f"NWS API error {exc.response.status_code} for {url}"
+            )
+
+        except Exception as exc:
+            logger.exception(f"Unexpected error calling NWS API: {exc}")
+
+    return None

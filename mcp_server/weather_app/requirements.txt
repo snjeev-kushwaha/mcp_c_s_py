@@ -1,3 +1,4 @@
 mcp
 httpx
 pymongo
+python-dotenv
