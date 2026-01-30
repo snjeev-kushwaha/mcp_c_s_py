@@ -1,3 +1,4 @@
+import sys
 from pymongo import MongoClient
 from app.config import MONGO_URI, MONGO_DB_NAME
 
@@ -6,6 +7,7 @@ _client = None
 def get_db():
     global _client
     if _client is None:
+        sys.stderr.write(f"Connecting Mongo URI={MONGO_URI}, DB={MONGO_DB_NAME}\n")
         _client = MongoClient(
             MONGO_URI,
             serverSelectionTimeoutMS=3000
