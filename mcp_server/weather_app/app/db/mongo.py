@@ -1,6 +1,6 @@
 import sys
 from pymongo import MongoClient
-from app.config import MONGO_URI, MONGO_DB_NAME
+from weather_app.app.config.config import MONGO_URI, MONGO_DB_NAME
 
 _client = None
 
@@ -13,3 +13,4 @@ def get_db():
             serverSelectionTimeoutMS=3000
         )
     return _client[MONGO_DB_NAME]
+

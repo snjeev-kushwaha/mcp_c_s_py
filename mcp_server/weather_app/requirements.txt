@@ -2,3 +2,5 @@ mcp
 httpx
 pymongo
 python-dotenv
+openpyxl
+PyGithub

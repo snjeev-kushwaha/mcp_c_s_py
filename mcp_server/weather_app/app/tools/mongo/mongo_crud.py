@@ -22,12 +22,11 @@ async def mongo_crud(
     Args:
         operation: insert | update | delete | find
         collection: MongoDB collection name
-        data: Document to insert
-        filter: Filter criteria
-        update: Fields to update
-        limit: Max records for find
+        data: Document or list of documents to insert
+        filter: Filter criteria for update/delete/find
+        update: Fields to update (for update operation)
+        limit: Max records to return for find
     """
-
     if operation not in ALLOWED_OPERATIONS:
         return f"Invalid operation: {operation}"
 
@@ -38,7 +37,7 @@ async def mongo_crud(
         if operation == "insert":
             if not data:
                 return "Insert operation requires data."
-            
+
             # Multi insert
             if isinstance(data, list):
                 if not all(isinstance(d, dict) for d in data):
@@ -52,21 +51,21 @@ async def mongo_crud(
                 }
 
             if isinstance(data, dict):
-                normalized  = normalize_dates(data)
-                result = col.insert_one(normalized )
+                normalized = normalize_dates(data)
+                result = col.insert_one(normalized)
                 return f"Inserted document with id: {result.inserted_id}"
 
         elif operation == "update":
             if not filter or not update:
                 return "Update operation requires filter and update."
-            
+
             safe_update = sanitize_update(update)
             normalized_update = normalize_dates(safe_update)
             result = col.update_many(filter, {"$set": normalized_update})
             return (
-                     f"Matched records: {result.matched_count}, "
-                     f"Modified records: {result.modified_count}"
-                 )
+                f"Matched records: {result.matched_count}, "
+                f"Modified records: {result.modified_count}"
+            )
 
         elif operation == "delete":
             if not filter:
@@ -76,6 +75,11 @@ async def mongo_crud(
             return f"Deleted {result.deleted_count} documents."
 
         elif operation == "find":
+            if filter is not None and not isinstance(filter, dict):
+                return "Invalid filter: must be an object"
+
+            if limit is not None and not isinstance(limit, int):
+                return "Invalid limit: must be an integer"
             normalized_filter = normalize_dates(filter or {})
             cursor = col.find(normalized_filter).limit(limit)
             documents = []

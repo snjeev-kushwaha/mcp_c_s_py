@@ -1,6 +1,6 @@
 from app.server import mcp
 # from app.config import NWS_API_BASE
-from app.http_client import make_nws_request
+from weather_app.app.utils.http_client import make_nws_request
 
 # @mcp.tool()
 # async def get_forecast(latitude: float, longitude: float) -> str:
@@ -35,25 +35,36 @@ from app.http_client import make_nws_request
 #     return "\n\n---\n\n".join(output)
 
 @mcp.tool()
-async def get_forecast(location: str, days: int = 3) -> str:
+async def get_forecast(location: str, days: int = 3):
+    # """
+    # Get weather forecast for the next few days.
+
+    # Args:
+    #     location: City or place name
+    #     days: Number of days to forecast (default 3)
+    # """
     data = await make_nws_request(
         "forecast.json",
         {"q": location, "days": days}
     )
 
     if not data:
-        return "Unable to fetch forecast."
+        return { "error": "Unable to fetch forecast" }
 
-    forecast_days = data["forecast"]["forecastday"]
-    output = []
+    forecast_days = []
 
-    for day in forecast_days:
+    for day in data["forecast"]["forecastday"]:
         d = day["day"]
-        output.append(
-            f"{day['date']}:\n"
-            f"Max: {d['maxtemp_c']}°C\n"
-            f"Min: {d['mintemp_c']}°C\n"
-            f"Condition: {d['condition']['text']}"
-        )
+        forecast_days.append({
+            "date": day["date"],
+            "max_temp": d["maxtemp_c"],
+            "min_temp": d["mintemp_c"],
+            "condition": d["condition"]["text"]
+        })
 
-    return "\n\n---\n\n".join(output)
+    return {
+        "location": location,
+        "days": days,
+        "forecast": forecast_days
+    }
+

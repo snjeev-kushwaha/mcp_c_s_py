@@ -34,3 +34,18 @@ Add a user named John, age 30, email john@test.com
 Show all users older than 25
 Update John's age to 31
 Delete all inactive users
+
+# Final Recommendation (what I’d do) (openai)
+# Today
+Single venv
+Explicit python path
+Logging + debug prints
+# Next
+Dockerize MCP server
+TCP-based MCP connection
+# Real Production
+One MCP server per container
+ENV-based config
+Kubernetes / ECS
+Health checks
+Observability

@@ -9,3 +9,9 @@ pip install -r requirements.txt
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+
+# when we develop mcp client and server we have use folder structure like this
+C:\mcp
+ ├─ venv\
+ ├─ mcp_client\
+ └─ mcp_server\
