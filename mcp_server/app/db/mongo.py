@@ -1,6 +1,6 @@
 import sys
 from pymongo import MongoClient
-from weather_app.app.config.config import MONGO_URI, MONGO_DB_NAME
+from app.config.config import MONGO_URI, MONGO_DB_NAME
 
 _client = None
 

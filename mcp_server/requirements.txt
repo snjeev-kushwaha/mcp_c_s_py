@@ -1,0 +1,8 @@
+mcp # mcp server
+httpx # http request
+pymongo # mongodb
+python-dotenv # env
+openpyxl # excel
+PyGithub # github
+requests # jira
+tenacity # jira

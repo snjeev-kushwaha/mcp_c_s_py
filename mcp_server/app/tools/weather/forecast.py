@@ -1,6 +1,6 @@
 from app.server import mcp
 # from app.config import NWS_API_BASE
-from weather_app.app.utils.http_client import make_nws_request
+from app.utils.http_client import make_nws_request
 
 # @mcp.tool()
 # async def get_forecast(latitude: float, longitude: float) -> str:

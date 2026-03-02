@@ -1,7 +1,7 @@
 from app.server import mcp
 # from app.config import NWS_API_BASE
-from weather_app.app.utils.http_client import make_nws_request
-from weather_app.app.utils.formatters import format_alert
+from app.utils.http_client import make_nws_request
+from app.utils.formatters import format_alert
 
 # @mcp.tool()
 # async def get_alerts(state: str) -> str:

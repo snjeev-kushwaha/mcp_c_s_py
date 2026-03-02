@@ -3,7 +3,7 @@ import httpx
 import logging
 
 # from app.config import USER_AGENT, REQUEST_TIMEOUT
-from weather_app.app.config.config import WEATHER_API_BASE, WEATHER_API_KEY, REQUEST_TIMEOUT
+from app.config.config import WEATHER_API_BASE, WEATHER_API_KEY, REQUEST_TIMEOUT
 
 logger = logging.getLogger(__name__)
 

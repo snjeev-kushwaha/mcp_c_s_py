@@ -8,12 +8,12 @@
 {
   "mcpServers": {
     "weather": {
-      "command": "C:/mcp/mcp_server/weather_app/venv/Scripts/python.exe",
+      "command": "C:/mcp/mcp_server/venv/Scripts/python.exe",
       "args": [
         "-u",
-        "C:/mcp/mcp_server/weather_app/main.py"
+        "C:/mcp/mcp_server/main.py"
       ],
-      "cwd": "C:/mcp/mcp_server/weather_app"
+      "cwd": "C:/mcp/mcp_server"
     }
   }
 }
@@ -49,3 +49,15 @@ ENV-based config
 Kubernetes / ECS
 Health checks
 Observability
+
+
+# How to use jira tools
+User says: Log 3 hours on DEV-102
+User says:
+Agent: Log 3 hours on DEV-102
+
+User says:
+Show pending tasks of sanjeev@example.com
+User says:
+Agent: Show pending tasks of sanjeev@example.com
+

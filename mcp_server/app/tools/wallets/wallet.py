@@ -1,5 +1,5 @@
 from app.server import mcp
-from weather_app.app.utils.http_client import make_api_call
+from app.utils.http_client import make_api_call
 
 @mcp.tool()
 async def get_wallet_balance(sv_id: str, wallet_name: str) -> str:
